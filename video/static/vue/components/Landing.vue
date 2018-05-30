@@ -6,45 +6,63 @@
 
           </div>
         </div>
-        <div class="col-sm-3">
-          <div id="subscribers"></div>
-        </div>
+      </div>
+      <div class="row">
+          <div class="col-sm-12" id="subscribers"></div>
       </div>
   </div>
 </template>
 
 <script>
 export default {
+  data: function() {
+    return {
+      session: OT.initSession(apiKey, sessionId),
+      publisher: OT.initPublisher('publisher', {mirror: false, facingMode: 'user'})
+    };
+  },
+  methods: {
+    connect: function() {
+      this.session.connect(token, function(error) {
+        if (error) {
+          console.error('Failed to connect', error);
+        }
+      });
+    },
+    sessionConnected: function(event) {
+      // Initialize a Publisher, and place it into the element with id="publisher"
+      this.session.publish(this.publisher, function(error) {
+        if (error) {
+          console.error('Failed to publish', error);
+        }
+      });
+    },
+    streamCreated: function(event) {
+      // Create a container for a new Subscriber, assign it an id using the streamId, put it inside
+      // the element with id="subscribers"
+      debugger;
+      let subContainer = document.createElement('div');
+      subContainer.id = 'stream-' + event.stream.streamId;
+      document.getElementById('subscribers').appendChild(subContainer);
+
+      // Subscribe to the stream that caused this event, put it inside the container we just made
+      this.session.subscribe(event.stream, subContainer, function(error) {
+        if (error) {
+          console.error('Failed to subscribe', error);
+        }
+      });
+    },
+  },
   mounted: function() {
+    let _this = this;
+    _this.session.on({
+      // This function runs when session.connect() asynchronously completes
+      sessionConnected: _this.sessionConnected,
 
-    let session = OT.initSession(apiKey, sessionId);
-    // Initialize a Publisher, and place it into the element with id="publisher"
-    let publisher = OT.initPublisher('publisher', null, e => {
-      if (e) {
-        console.log('error init!');
-      }
+      // This function runs when another client publishes a stream (eg. session.publish())
+      streamCreated: _this.streamCreated
     });
-    publisher.on({
-      streamCreated: e => {
-        console.log('started streaming', e);
-        session.subscribe(e.stream, 'subscriber', null, e => {
-          if (e) {
-            console.log(e);
-          }
-        })
-      },
-      streamDestroyed: e => {
-        console.log('stop streaming', e);
-      }
-    });
-
-    session.connect(token, error => {
-      if (session.capabilities.publish == 1) {
-        session.publish(publisher);
-      } else {
-        console.log(error);
-      }
-    });
+    _this.connect();
   }
 };
 </script>
