@@ -1,14 +1,14 @@
 <template>
   <div class="container">
       <div class="row">
-        <div class="col-sm-12">
+        <div class="col-sm-6 offset-sm-3">
           <div id="publisher">
 
           </div>
         </div>
-      </div>
-      <div class="row">
-          <div class="col-sm-12" id="subscribers"></div>
+        <div class="col-sm-3">
+          <div id="subscribers"></div>
+        </div>
       </div>
   </div>
 </template>
@@ -16,43 +16,33 @@
 <script>
 export default {
   mounted: function() {
+
     let session = OT.initSession(apiKey, sessionId);
-
     // Initialize a Publisher, and place it into the element with id="publisher"
-    let publisher = OT.initPublisher('publisher');
-
-    // Attach event handlers
-    session.on({
-      // This function runs when session.connect() asynchronously completes
-      sessionConnected: function(event) {
-        // Publish the publisher we initialzed earlier (this will trigger 'streamCreated' on other
-        // clients)
-        session.publish(publisher, function(error) {
-          if (error) {
-            console.error('Failed to publish', error);
-          }
-        });
-      },
-
-      // This function runs when another client publishes a stream (eg. session.publish())
-      streamCreated: function(event) {
-        // Create a container for a new Subscriber, assign it an id using the streamId, put it inside
-        // the element with id="subscribers"
-        var subContainer = document.createElement('div');
-        subContainer.id = 'stream-' + event.stream.streamId;
-        document.getElementById('subscribers').appendChild(subContainer);
-
-        // Subscribe to the stream that caused this event, put it inside the container we just made
-        session.subscribe(event.stream, subContainer, function(error) {
-          if (error) {
-            console.error('Failed to subscribe', error);
-          }
-        });
+    let publisher = OT.initPublisher('publisher', null, e => {
+      if (e) {
+        console.log('error init!');
       }
     });
-    session.connect(token, function(error) {
-      if (error) {
-        console.error('Failed to connect', error);
+    publisher.on({
+      streamCreated: e => {
+        console.log('started streaming', e);
+        session.subscribe(e.stream, 'subscriber', null, e => {
+          if (e) {
+            console.log(e);
+          }
+        })
+      },
+      streamDestroyed: e => {
+        console.log('stop streaming', e);
+      }
+    });
+
+    session.connect(token, error => {
+      if (session.capabilities.publish == 1) {
+        session.publish(publisher);
+      } else {
+        console.log(error);
       }
     });
   }
