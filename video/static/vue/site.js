@@ -29,7 +29,7 @@ var router = new VueRouter({
   ]
 });
 
-new Vue({
+let app = new Vue({
     router,
     store: store,
     el: '#app',

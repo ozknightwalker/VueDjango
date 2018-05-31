@@ -122,9 +122,14 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
-STATIC_URL = 'http://localhost/static/'
+STATIC_URL = '/static/'
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'storage/static')
+# STATIC_ROOT = os.path.join(BASE_DIR, 'storage/static')
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "storage/static"),
+    # '/var/www/static/',
+]
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
@@ -134,7 +139,7 @@ REST_FRAMEWORK = {
 }
 
 
-OPENTOK_API_KEY = os.getenv('OPENTOK_API_KEY')
-OPENTOK_SECRET_KEY = os.getenv('OPENTOK_SECRET_KEY')
+OPENTOK_API_KEY = os.getenv('OPENTOK_API_KEY', '')
+OPENTOK_SECRET_KEY = os.getenv('OPENTOK_SECRET_KEY', '')
 
 OPENTOK = OpenTok(OPENTOK_API_KEY, OPENTOK_SECRET_KEY)
