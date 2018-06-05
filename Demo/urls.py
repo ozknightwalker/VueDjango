@@ -18,8 +18,11 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
 
+from .router import router
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('video.urls')),
-    path('api-auth/', include('rest_framework.urls', namespace='rest_framework'))
+    path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    path('api/', include(router.urls))
 ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

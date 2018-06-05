@@ -41,6 +41,7 @@ INSTALLED_APPS = [
 
     'video.apps.VideoConfig',
     'userprofile.apps.UserprofileConfig',
+    'room.apps.RoomConfig',
     'rest_framework',
 ]
 
@@ -139,7 +140,7 @@ REST_FRAMEWORK = {
 }
 
 
-OPENTOK_API_KEY = os.getenv('OPENTOK_API_KEY', '')
-OPENTOK_SECRET_KEY = os.getenv('OPENTOK_SECRET_KEY', '')
+OPENTOK_API_KEY = os.getenv('OPENTOK_API_KEY', '46110472')
+OPENTOK_SECRET_KEY = os.getenv('OPENTOK_SECRET_KEY', '8d90efd83deaa06e1ac35d41a0b2b4498eda8e1d')
 
 OPENTOK = OpenTok(OPENTOK_API_KEY, OPENTOK_SECRET_KEY)

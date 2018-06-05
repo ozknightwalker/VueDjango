@@ -7,6 +7,7 @@ import VieCookies from 'vue-cookies';
 
 import Login from './components/Login.vue';
 import Landing from './components/Landing.vue';
+import RoomDetails from './components/room/RoomDetails.vue';
 
 Vue.use(VueRouter);
 Vue.use(VueResource);
@@ -25,7 +26,11 @@ var router = new VueRouter({
       beforeEnter: (to, from, next) => {
         next(store.getters.is_authenticated);
       }
-    }
+    },
+    {
+      path: '/room/:id',
+      component: RoomDetails
+    },
   ]
 });
 
