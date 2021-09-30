@@ -51,7 +51,7 @@ python-versions = ">=3.5"
 
 [[package]]
 name = "ecdsa"
-version = "0.13"
+version = "0.13.3"
 description = "ECDSA cryptographic signature library (pure python)"
 category = "main"
 optional = false
@@ -191,7 +191,7 @@ socks = ["PySocks (>=1.5.6,!=1.5.7,<2.0)"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "d9e2c14a7f3bb69aa82b00a331d6b619e2eeddd76559b3e77483c596f622709f"
+content-hash = "a612829148e9c98bc934e2e3096234f2a16e591e0ea67f5d20ac4f41027b7083"
 
 [metadata.files]
 certifi = [
@@ -214,8 +214,8 @@ djangorestframework = [
     {file = "djangorestframework-3.10.3.tar.gz", hash = "sha256:dc81cbf9775c6898a580f6f1f387c4777d12bd87abf0f5406018d32ccae71090"},
 ]
 ecdsa = [
-    {file = "ecdsa-0.13-py2.py3-none-any.whl", hash = "sha256:40d002cf360d0e035cf2cb985e1308d41aaa087cbfc135b2dc2d844296ea546c"},
-    {file = "ecdsa-0.13.tar.gz", hash = "sha256:64cf1ee26d1cde3c73c6d7d107f835fed7c6a2904aef9eac223d57ad800c43fa"},
+    {file = "ecdsa-0.13.3-py2.py3-none-any.whl", hash = "sha256:9814e700890991abeceeb2242586024d4758c8fc18445b194a49bd62d85861db"},
+    {file = "ecdsa-0.13.3.tar.gz", hash = "sha256:163c80b064a763ea733870feb96f9dd9b92216cfcacd374837af18e4e8ec3d4d"},
 ]
 enum34 = [
     {file = "enum34-1.1.10-py2-none-any.whl", hash = "sha256:a98a201d6de3f2ab3db284e70a33b0f896fbf35f8086594e8c9e74b909058d53"},
